@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>数据处理工具</title>
+  <!-- 修改为本地文件引用 -->
+  <script src="xlsx.full.min.js"></script>
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+  <div class="container">
+    <h1>数据处理工具</h1>
+
+    <!-- 文件导入区域 -->
+    <div class="section">
+      <h2>1. 导入Excel文件</h2>
+      <div class="file-upload-area">
+        <button id="uploadBtn" class="upload-button">选择Excel文件</button>
+        <input type="file" id="fileInput" accept=".xlsx,.xls" style="display: none;">
+        <div id="fileList" class="file-list"></div>
+      </div>
+    </div>
+
+    <!-- 数据展示区域 -->
+    <div class="section">
+      <h2>2. 数据预览</h2>
+      <div id="dataPreview" class="data-preview"></div>
+    </div>
+
+    <!-- 数据处理区域 -->
+    <div class="section">
+      <h2>3. 数据处理</h2>
+      <div class="code-editor">
+        <textarea id="codeInput" placeholder="在这里编写处理数据的JavaScript代码
+
+// 示例代码:
+// function processData() {
+//     // 访问导入的数据
+//     console.log(window.dataSources);
+//     
+//     // 处理数据 (例如过滤data1中的某些行)
+//     const filteredData = window.dataSources.data1.filter(item => item.age > 18);
+//     
+//     // 将结果保存回数据源
+//     window.dataSources.result = filteredData;
+//     
+//     // 显示结果
+//     renderDataPreview('result');
+// }
+
+// 记得调用函数
+// processData();"></textarea>
+        <button id="runCodeBtn">运行代码</button>
+      </div>
+      <div id="codeResult" class="code-result"></div>
+    </div>
+
+    <!-- 导出区域 -->
+    <div class="section">
+      <h2>4. 导出数据</h2>
+      <div class="export-options">
+        <select id="exportDataSource">
+          <option value="">选择要导出的数据源</option>
+        </select>
+        <button id="exportBtn">导出为Excel</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 将弹窗结构移到body标签内 -->
+  <!-- 文件上传弹窗 -->
+  <div id="uploadModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>设置数据源</h3>
+        <button id="closeModalBtn" class="close-btn">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label for="dataSourceName">数据源名称 (英文+数字):</label>
+          <input type="text" id="dataSourceName" pattern="[a-zA-Z0-9]+" placeholder="如: data1" required>
+          <div id="nameError" class="error-message"></div>
+        </div>
+        <div class="form-group">
+          <label>
+            <input type="checkbox" id="hasHeader" checked>
+            包含表头
+          </label>
+          <small>注：无论是否选择表头，属性名都将使用field1、field2等命名</small>
+        </div>
+        <!-- 在弹窗的modal-body中添加文件选择按钮 -->
+        <div class="form-group">
+          <label for="fileUploadInModal">选择Excel文件:</label>
+          <input type="file" id="fileUploadInModal" accept=".xlsx,.xls" style="display: none;">
+          <button id="selectFileBtn" class="upload-button">浏览文件</button>
+          <p>当前文件: <span id="currentFileName">未选择文件</span></p>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button id="confirmUploadBtn" class="confirm-btn">确认上传</button>
+        <button id="cancelUploadBtn" class="cancel-btn">取消</button>
+      </div>
+    </div>
+  </div>
+  <script src="app.js"></script>
+</body>
+
+</html>
